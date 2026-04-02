@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sanshrita is revolutionizing education with AI-powered innovation, creating a unified learning ecosystem for students, teachers, and administrators.">
+    <link rel="icon" href="./favicon.ico?v=2" sizes="any" type="image/x-icon">
+    <link rel="shortcut icon" href="./favicon.ico?v=2" type="image/x-icon">
+    <title>Sanshrita | Redefining Education</title>
+    <style>
+        :root {
+            --bg: #f6f8fc;
+            --surface: #ffffff;
+            --surface-soft: #f4f7ff;
+            --text: #1c2433;
+            --text-muted: #60708f;
+            --brand: #2858ff;
+            --brand-soft: #eaf0ff;
+            --line: #dbe3f3;
+            --shadow: 0 14px 36px rgba(18, 39, 88, 0.10);
+            --radius-lg: 22px;
+            --radius-md: 14px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 7rem;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Space Grotesk", "Segoe UI", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(1000px 360px at 10% -15%, #eaf0ff 0%, transparent 70%),
+                radial-gradient(900px 340px at 95% 0%, #ecfff7 0%, transparent 70%),
+                var(--bg);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            width: 0;
+            z-index: 30;
+            background: linear-gradient(90deg, #38c6a4, #3b8cff, #6d6dff);
+            box-shadow: 0 2px 10px rgba(59, 140, 255, 0.35);
+        }
+
+        .motion-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(0.5px);
+            opacity: 0.35;
+        }
+
+        .orb-a {
+            width: clamp(170px, 20vw, 300px);
+            aspect-ratio: 1;
+            background: radial-gradient(circle at 30% 30%, #dff6ef, #9fe7d5);
+            top: 14%;
+            left: -5%;
+        }
+
+        .orb-b {
+            width: clamp(210px, 24vw, 360px);
+            aspect-ratio: 1;
+            background: radial-gradient(circle at 60% 40%, #e2ebff, #b8ccff);
+            top: 58%;
+            right: -8%;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .site-wrap {
+            width: min(1120px, calc(100% - clamp(1rem, 3vw, 3rem)));
+            margin-inline: auto;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0.8rem;
+            z-index: 12;
+            margin-top: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.68);
+            border-radius: 22px;
+            background:
+                linear-gradient(125deg, rgba(255, 255, 255, 0.78), rgba(244, 249, 255, 0.68)),
+                rgba(255, 255, 255, 0.62);
+            backdrop-filter: blur(14px) saturate(140%);
+            -webkit-backdrop-filter: blur(14px) saturate(140%);
+            box-shadow:
+                0 10px 30px rgba(26, 55, 123, 0.14),
+                inset 0 1px 0 rgba(255, 255, 255, 0.75);
+            overflow: hidden;
+        }
+
+        .topbar::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(100deg, rgba(113, 161, 255, 0.18), rgba(109, 219, 192, 0.12) 40%, rgba(255, 255, 255, 0) 75%);
+            pointer-events: none;
+        }
+
+        .topbar::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            right: -90px;
+            top: -140px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(83, 144, 255, 0.22), rgba(83, 144, 255, 0));
+            pointer-events: none;
+        }
+
+        .topbar-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.6rem 0.8rem 0.6rem 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.72rem;
+            color: var(--text);
+        }
+
+        .brand-mark {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.62rem;
+            border: 1px solid #b9cbf8;
+            background: radial-gradient(circle at 30% 25%, #ffffff 0%, #d9e6ff 42%, #bfd3ff 100%);
+            position: relative;
+            box-shadow: 0 8px 18px rgba(31, 75, 187, 0.16);
+            flex-shrink: 0;
+        }
+
+        .brand-mark::before,
+        .brand-mark::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            margin: auto;
+            border-radius: 0.4rem;
+        }
+
+        .brand-mark::before {
+            width: 1.1rem;
+            height: 1.1rem;
+            border: 2px solid #2d61d8;
+            border-top-color: transparent;
+            transform: rotate(45deg);
+        }
+
+        .brand-mark::after {
+            width: 0.36rem;
+            height: 0.36rem;
+            background: #2d61d8;
+            box-shadow: 0 0 0 4px rgba(45, 97, 216, 0.12);
+        }
+
+        .brand-word {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+            gap: 0.2rem;
+        }
+
+        .brand-name {
+            font-size: 1.03rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .brand-tag {
+            font-size: 0.56rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #6f7d99;
+            font-weight: 700;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: clamp(0.5rem, 1.4vw, 1rem);
+        }
+
+        .nav-list a {
+            text-decoration: none;
+            color: #516083;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.01em;
+            padding: 0.5rem 0.9rem;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            transition: 220ms ease;
+        }
+
+        .nav-list a:hover {
+            color: #1948c8;
+            border-color: #d4e0fb;
+            background: rgba(239, 245, 255, 0.9);
+            box-shadow: 0 6px 14px rgba(53, 94, 192, 0.11);
+        }
+
+        .nav-list a.is-active {
+            color: #1846c3;
+            background: rgba(231, 240, 255, 0.92);
+            border-color: #cad9fb;
+        }
+
+        .topbar-cta {
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 999px;
+            padding: 0.52rem 0.95rem;
+            font-weight: 700;
+            font-size: 0.84rem;
+            letter-spacing: 0.02em;
+            text-decoration: none;
+            color: #fff;
+            background: linear-gradient(130deg, #2f6fff, #1d93d8);
+            box-shadow: 0 10px 20px rgba(34, 103, 222, 0.32);
+            transition: transform 220ms ease, box-shadow 220ms ease;
+            flex-shrink: 0;
+        }
+
+        .topbar-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 22px rgba(34, 103, 222, 0.40);
+        }
+
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: stretch;
+            gap: clamp(1rem, 2.6vw, 2rem);
+            margin-top: clamp(1.5rem, 4vw, 3rem);
+        }
+
+        .hero-copy,
+        .hero-panel {
+            flex: 1 1 320px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--line);
+            background: var(--surface);
+            box-shadow: var(--shadow);
+            padding: clamp(1.2rem, 2.5vw, 2.2rem);
+        }
+
+        .hero-panel {
+            background: linear-gradient(160deg, #fdfdff 5%, #f3f8ff 60%, #effff7 100%);
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            border: 1px solid #cad8ff;
+            background: #f3f6ff;
+            color: #3e57a8;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(1.65rem, 3.2vw, 2.9rem);
+            line-height: 1.2;
+            margin-bottom: 0.8rem;
+            max-width: 17ch;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            max-width: 58ch;
+        }
+
+        .hero-actions {
+            margin-top: 1.2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 12px;
+            padding: 0.72rem 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 180ms ease, box-shadow 180ms ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background: linear-gradient(135deg, var(--brand), #3b8cff);
+            box-shadow: 0 10px 22px rgba(40, 88, 255, 0.30);
+        }
+
+        .btn-ghost {
+            color: #1f48cc;
+            background: #ecf1ff;
+            border: 1px solid #cad8ff;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .signal-grid {
+            margin-top: 1.2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .signal {
+            flex: 1 1 140px;
+            border: 1px solid #d4def6;
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 0.8rem;
+        }
+
+        .signal h3 {
+            font-size: 1.2rem;
+            line-height: 1;
+            margin-bottom: 0.35rem;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(32px) scale(0.98);
+            will-change: opacity, transform;
+        }
+
+        .panel-card,
+        .btn,
+        .brand-mark {
+            will-change: transform;
+        }
+
+        .section {
+            margin-top: clamp(1.8rem, 4vw, 3.2rem);
+            border: 1px solid var(--line);
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            padding: clamp(1.2rem, 2.6vw, 2rem);
+        }
+
+        .section-title {
+            font-size: clamp(1.35rem, 2.2vw, 2rem);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-intro {
+            color: var(--text-muted);
+            max-width: 70ch;
+        }
+
+        .panels {
+            margin-top: 1.2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .panel-card {
+            flex: 1 1 220px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-md);
+            background: var(--surface-soft);
+            padding: 1rem;
+            transition: 220ms ease;
+        }
+
+        .panel-card h3 {
+            margin-bottom: 0.3rem;
+        }
+
+        .panel-card p {
+            color: var(--text-muted);
+        }
+
+        .panel-card:hover {
+            transform: translateY(-3px);
+            border-color: #c7d4f8;
+            box-shadow: 0 10px 20px rgba(44, 73, 150, 0.11);
+        }
+
+        .partners,
+        .contact {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            margin-top: 1rem;
+            border: 1px dashed #c9d6f7;
+            border-radius: var(--radius-md);
+            padding: 0.9rem 1rem;
+            background: #f9fbff;
+        }
+
+        .contact .btn {
+            white-space: nowrap;
+        }
+
+        .partners {
+            justify-content: center;
+            text-align: center;
+            flex-direction: column;
+            gap: 0.35rem;
+            border-style: solid;
+            border-color: #d9e3fb;
+            background: linear-gradient(150deg, #f7faff 0%, #f3f9ff 55%, #f8fcff 100%);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+            padding: clamp(1rem, 2vw, 1.35rem);
+        }
+
+        .partners-title {
+            font-size: clamp(1.1rem, 2.2vw, 1.55rem);
+            letter-spacing: 0.01em;
+        }
+
+        .coming-soon {
+            font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+            color: #4e5f84;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .blink-dot {
+            width: 0.3rem;
+            height: 0.3rem;
+            border-radius: 50%;
+            background: #3e78ff;
+            display: inline-block;
+            opacity: 0.2;
+            animation: blinkDots 1.2s infinite;
+        }
+
+        .blink-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .blink-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #fff;
+            border: 1px solid #d5e0fb;
+            padding: 0.35rem 0.7rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            color: #4963b0;
+            font-weight: 600;
+        }
+
+        .footer {
+            margin-block: clamp(1.8rem, 4.5vw, 3.5rem) 1.5rem;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            background: var(--surface);
+            box-shadow: var(--shadow);
+            padding: clamp(1rem, 2.4vw, 1.7rem);
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-section {
+            flex: 1 1 220px;
+        }
+
+        .footer h2,
+        .footer h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.45rem;
+        }
+
+        .footer-logo .brand-mark {
+            width: 1.7rem;
+            height: 1.7rem;
+        }
+
+        .footer-logo .brand-name {
+            font-size: 0.92rem;
+        }
+
+        .footer p,
+        .footer a,
+        .footer li {
+            color: var(--text-muted);
+            text-decoration: none;
+            list-style: none;
+        }
+
+        .footer a:hover {
+            color: var(--brand);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--line);
+            margin-top: 0.9rem;
+            padding-top: 0.8rem;
+            font-size: 0.9rem;
+            color: #7b88a5;
+        }
+
+        @keyframes rise {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes blinkDots {
+            0%,
+            80%,
+            100% {
+                opacity: 0.18;
+                transform: translateY(0);
+            }
+
+            40% {
+                opacity: 1;
+                transform: translateY(-2px);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .site-wrap {
+                width: min(1120px, calc(100% - 1rem));
+            }
+
+            .topbar {
+                border-radius: 18px;
+                top: 0.45rem;
+            }
+
+            .topbar-inner {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 0.8rem;
+            }
+
+            .brand {
+                justify-content: flex-start;
+            }
+
+            .topbar nav {
+                width: 100%;
+            }
+
+            .nav-list {
+                width: 100%;
+                justify-content: flex-start;
+                flex-wrap: wrap;
+                gap: 0.55rem;
+            }
+
+            .nav-list li {
+                flex: 1 1 calc(50% - 0.55rem);
+                min-width: 120px;
+            }
+
+            .nav-list a {
+                display: block;
+                text-align: center;
+            }
+
+            .topbar-cta {
+                align-self: stretch;
+                text-align: center;
+            }
+
+            .hero {
+                margin-top: 1rem;
+            }
+
+            .hero-copy,
+            .hero-panel,
+            .section,
+            .footer {
+                border-radius: 18px;
+                padding: 1rem;
+            }
+
+            .hero h1 {
+                max-width: 100%;
+                font-size: clamp(1.95rem, 9vw, 2.5rem);
+            }
+
+            .hero-actions .btn {
+                flex: 1 1 150px;
+                text-align: center;
+            }
+
+            .signal-grid {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .signal {
+                min-width: 0;
+            }
+
+            .panel-card {
+                flex: 1 1 100%;
+            }
+
+            .contact {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .contact .btn {
+                width: 100%;
+                text-align: center;
+                white-space: normal;
+            }
+
+            .footer-container {
+                gap: 0.7rem;
+            }
+
+            .footer-section {
+                flex: 1 1 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .brand-name {
+                font-size: 0.92rem;
+                letter-spacing: 0.03em;
+            }
+
+            .brand-tag {
+                letter-spacing: 0.12em;
+            }
+
+            .nav-list li {
+                flex: 1 1 100%;
+            }
+
+            .signal-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .partners,
+            .contact,
+            .panel-card {
+                padding: 0.8rem;
+            }
+
+            .orb {
+                opacity: 0.18;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-item {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="scroll-progress" aria-hidden="true"></div>
+    <div class="motion-layer" aria-hidden="true">
+        <div class="orb orb-a"></div>
+        <div class="orb orb-b"></div>
+    </div>
+    <div class="site-wrap">
+        <header class="topbar reveal-item">
+            <div class="topbar-inner">
+                <div class="brand">
+                    <span class="brand-mark" aria-hidden="true"></span>
+                    <span class="brand-word">
+                        <span class="brand-name">Sanshrita</span>
+                        <span class="brand-tag">Learning Future</span>
+                    </span>
+                </div>
+                <nav aria-label="Primary Navigation">
+                    <ul class="nav-list">
+                        <li><a class="is-active" href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </nav>
+                <a class="topbar-cta" href="#contact">Start Journey</a>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero" id="home">
+                <div class="hero-copy reveal-item">
+                    <span class="eyebrow">AI Learning Ecosystem</span>
+                    <h1>A revolution is transforming the foundation of education.</h1>
+                    <p>
+                        Sanshrita is reshaping the learning experience for students, teachers, and administrators
+                        through a single intelligent platform that adapts, scales, and inspires.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="#about">Explore Vision</a>
+                        <a class="btn btn-ghost" href="#contact">Get in Touch</a>
+                    </div>
+                </div>
+
+                <aside class="hero-panel reveal-item" aria-label="Platform Highlights">
+                    <h2>From classrooms to limitless learning</h2>
+                    <p>
+                        This is more than a platform. It is a movement that combines human potential with practical AI.
+                    </p>
+                    <div class="signal-grid">
+                        <div class="signal">
+                            <h3><span class="count-up" data-target="3">0</span>x</h3>
+                            <p>faster content delivery support</p>
+                        </div>
+                        <div class="signal">
+                            <h3><span class="count-up" data-target="24">0</span>/7</h3>
+                            <p>learning insights and analytics</p>
+                        </div>
+                        <div class="signal">
+                            <h3><span class="count-up" data-target="1">0</span> Hub</h3>
+                            <p>for student, teacher, and admin</p>
+                        </div>
+                    </div>
+                </aside>
+            </section>
+
+            <section class="section reveal-item" id="about">
+                <h2 class="section-title">About Sanshrita</h2>
+                <p class="section-intro">
+                    At Sanshrita, we do not follow the old education system. We challenge it, rebuild it, and redefine
+                    it for the next generation with intelligence at the core.
+                </p>
+
+                <div class="panels">
+                    <article class="panel-card reveal-item">
+                        <h3>Student</h3>
+                        <p>Learn smarter, faster, and without limits with adaptive AI guidance.</p>
+                    </article>
+                    <article class="panel-card reveal-item">
+                        <h3>Teacher</h3>
+                        <p>Build courses, guide students, and teach smarter with intelligent tools.</p>
+                    </article>
+                    <article class="panel-card reveal-item">
+                        <h3>Admin</h3>
+                        <p>Manage, analyze, and scale your education system with complete control.</p>
+                    </article>
+                </div>
+                <div class="partners reveal-item">
+                    <h3 class="partners-title">Our Partners</h3>
+                    <p class="coming-soon">
+                        Comming soon
+                        <span class="blink-dot" aria-hidden="true"></span>
+                        <span class="blink-dot" aria-hidden="true"></span>
+                        <span class="blink-dot" aria-hidden="true"></span>
+                    </p>
+                </div>
+            </section>
+
+            <section class="section reveal-item" id="contact">
+                <h2 class="section-title">Contact Us</h2>
+                <p class="section-intro">Have questions or want to learn more? We would love to hear from you.</p>
+                <div class="contact reveal-item">
+                    <span>Email us anytime:</span>
+                    <a class="btn btn-ghost" href="mailto:sahil@example.com">addyprime0070@gmail.com</a>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer reveal-item">
+            <div class="footer-container">
+                <section class="footer-section reveal-item">
+                    <div class="footer-logo">
+                        <span class="brand-mark" aria-hidden="true"></span>
+                        <span class="brand-name">Sanshrita</span>
+                    </div>
+                    <p>Redefining education with AI-powered innovation and a unified learning ecosystem.</p>
+                </section>
+
+                <section class="footer-section reveal-item">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </section>
+
+                <section class="footer-section reveal-item">
+                    <h3>Contact</h3>
+                    <p>Email: addyprime0070@gmail.com</p>
+                </section>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Sanshrita. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="./anime.min.js"></script>
+    <script>
+        (function () {
+            const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            const hasAnime = typeof anime !== "undefined" && !reduceMotion;
+            if (!hasAnime) {
+                document.querySelectorAll(".reveal-item").forEach((el) => {
+                    el.style.opacity = "1";
+                    el.style.transform = "none";
+                });
+            }
+
+            const scrollProgress = document.querySelector(".scroll-progress");
+            const revealItems = document.querySelectorAll(".reveal-item");
+            const counters = document.querySelectorAll(".count-up");
+            const navLinks = Array.from(document.querySelectorAll(".nav-list a"));
+            const navTargets = navLinks
+                .map((link) => {
+                    const id = link.getAttribute("href");
+                    if (!id || !id.startsWith("#")) {
+                        return null;
+                    }
+                    const section = document.querySelector(id);
+                    return section ? { link, section, id } : null;
+                })
+                .filter(Boolean);
+
+            const setActiveNav = (id) => {
+                navLinks.forEach((link) => {
+                    link.classList.toggle("is-active", link.getAttribute("href") === id);
+                });
+            };
+
+            let isAutoScrolling = false;
+            let autoScrollTimer = null;
+
+            const updateActiveNavByScroll = () => {
+                if (!navTargets.length) {
+                    return;
+                }
+
+                const header = document.querySelector(".topbar");
+                const headerOffset = (header ? header.offsetHeight : 0) + 28;
+                const currentY = window.scrollY;
+                const viewportMid = headerOffset + ((window.innerHeight - headerOffset) * 0.35);
+                const maxScrollY = document.documentElement.scrollHeight - window.innerHeight;
+                let currentId = navTargets[0].id;
+
+                if (currentY >= maxScrollY - 4) {
+                    setActiveNav(navTargets[navTargets.length - 1].id);
+                    return;
+                }
+
+                navTargets.forEach(({ id, section }, index) => {
+                    const start = Math.max(section.offsetTop - headerOffset, 0);
+                    const nextSection = navTargets[index + 1] ? navTargets[index + 1].section : null;
+                    const end = nextSection
+                        ? Math.max(nextSection.offsetTop - headerOffset, start + 1)
+                        : document.documentElement.scrollHeight;
+                    const rect = section.getBoundingClientRect();
+                    const inViewportBand = rect.top <= viewportMid && rect.bottom > viewportMid;
+
+                    if ((currentY >= start && currentY < end) || inViewportBand) {
+                        currentId = id;
+                    }
+                });
+
+                setActiveNav(currentId);
+            };
+
+            const scrollToSection = (id) => {
+                const target = document.querySelector(id);
+                if (!target) {
+                    return;
+                }
+
+                const header = document.querySelector(".topbar");
+                const offset = (header ? header.offsetHeight : 0) + 24;
+                const top = target.getBoundingClientRect().top + window.scrollY - offset;
+                isAutoScrolling = true;
+                window.scrollTo({ top, behavior: "smooth" });
+                if (history.replaceState) {
+                    history.replaceState(null, "", id);
+                }
+                setActiveNav(id);
+
+                if (autoScrollTimer) {
+                    clearTimeout(autoScrollTimer);
+                }
+                autoScrollTimer = setTimeout(() => {
+                    isAutoScrolling = false;
+                    updateActiveNavByScroll();
+                }, 700);
+            };
+
+            navTargets.forEach(({ link, id }) => {
+                link.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    scrollToSection(id);
+                });
+            });
+
+            if (hasAnime) {
+                anime({
+                    targets: ".orb-a",
+                    translateX: [0, 55, 0],
+                    translateY: [0, -35, 0],
+                    duration: 10500,
+                    easing: "easeInOutSine",
+                    loop: true
+                });
+
+                anime({
+                    targets: ".orb-b",
+                    translateX: [0, -45, 0],
+                    translateY: [0, 28, 0],
+                    duration: 9800,
+                    easing: "easeInOutSine",
+                    loop: true
+                });
+
+                anime({
+                    targets: ".brand-mark",
+                    rotate: [0, 6, 0, -6, 0],
+                    duration: 4200,
+                    easing: "easeInOutSine",
+                    loop: true,
+                    delay: anime.stagger(260)
+                });
+            }
+
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
+                    if (hasAnime) {
+                        anime({
+                            targets: entry.target,
+                            opacity: [0, 1],
+                            translateY: [32, 0],
+                            scale: [0.98, 1],
+                            duration: 900,
+                            easing: "easeOutExpo"
+                        });
+                    } else {
+                        entry.target.style.opacity = "1";
+                        entry.target.style.transform = "none";
+                    }
+                    revealObserver.unobserve(entry.target);
+                });
+            }, { threshold: 0.12 });
+
+            revealItems.forEach((el) => revealObserver.observe(el));
+
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
+                    const target = Number(entry.target.getAttribute("data-target")) || 0;
+                    if (hasAnime) {
+                        const state = { value: 0 };
+                        anime({
+                            targets: state,
+                            value: target,
+                            duration: 1500,
+                            easing: "easeOutCubic",
+                            round: 1,
+                            update: function () {
+                                entry.target.textContent = String(state.value);
+                            }
+                        });
+                    } else {
+                        entry.target.textContent = String(target);
+                    }
+                    statsObserver.unobserve(entry.target);
+                });
+            }, { threshold: 0.8 });
+
+            counters.forEach((counter) => statsObserver.observe(counter));
+
+            if (hasAnime) {
+                const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+                if (finePointer) {
+                    const pointerTargets = document.querySelectorAll(".hero-copy, .hero-panel, .section");
+                    window.addEventListener("mousemove", (event) => {
+                        const xRatio = (event.clientX / window.innerWidth - 0.5) * 1.4;
+                        const yRatio = (event.clientY / window.innerHeight - 0.5) * 1.4;
+
+                        pointerTargets.forEach((target, index) => {
+                            const factor = (index % 2 === 0 ? 1 : -1) * 4;
+                            anime.remove(target);
+                            anime({
+                                targets: target,
+                                translateX: xRatio * factor,
+                                translateY: yRatio * factor,
+                                duration: 450,
+                                easing: "easeOutQuad"
+                            });
+                        });
+                    });
+
+                    document.querySelectorAll(".btn, .panel-card, .nav-list a").forEach((el) => {
+                        el.addEventListener("mouseenter", () => {
+                            anime({
+                                targets: el,
+                                scale: 1.04,
+                                duration: 240,
+                                easing: "easeOutQuad"
+                            });
+                        });
+
+                        el.addEventListener("mouseleave", () => {
+                            anime({
+                                targets: el,
+                                scale: 1,
+                                duration: 260,
+                                easing: "easeOutQuad"
+                            });
+                        });
+                    });
+                }
+            }
+
+            const refreshProgress = () => {
+                const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = pageHeight > 0 ? (window.scrollY / pageHeight) * 100 : 0;
+                if (hasAnime) {
+                    anime.remove(scrollProgress);
+                    anime({
+                        targets: scrollProgress,
+                        width: progress + "%",
+                        duration: 180,
+                        easing: "linear"
+                    });
+                } else {
+                    scrollProgress.style.width = progress + "%";
+                }
+            };
+
+            window.addEventListener("scroll", refreshProgress, { passive: true });
+            window.addEventListener("scroll", () => {
+                if (!isAutoScrolling) {
+                    updateActiveNavByScroll();
+                }
+            }, { passive: true });
+            window.addEventListener("resize", updateActiveNavByScroll);
+            refreshProgress();
+            updateActiveNavByScroll();
+
+            const initialHash = window.location.hash;
+            if (initialHash && document.querySelector(initialHash)) {
+                setTimeout(() => scrollToSection(initialHash), 100);
+            } else if (navTargets[0]) {
+                updateActiveNavByScroll();
+            }
+        })();
+    </script>
+    <script>
+        if ("serviceWorker" in navigator && location.protocol !== "file:") {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("./sw.js").catch(() => {
+                    // Offline cache registration failed; page still works normally.
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>
